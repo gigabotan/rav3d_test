@@ -12,7 +12,6 @@ namespace rav3d
         // Update is called once per frame
         void Update()
         {
-
             if (Input.GetMouseButtonDown(0) && !isOpen)
             {
                 if (RectTransformUtility.RectangleContainsScreenPoint(Button.GetComponent<RectTransform>(),
@@ -20,17 +19,12 @@ namespace rav3d
                 {
                     Toggle();
                 }
-                
             }
 
             if (Input.GetMouseButtonUp(0) && isOpen)
             {
                 Toggle();
             }
-
-
-
-
         }
 
         private void Toggle()

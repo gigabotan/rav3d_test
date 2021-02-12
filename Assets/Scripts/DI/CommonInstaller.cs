@@ -8,7 +8,6 @@ namespace rav3d
     {
         public override void InstallBindings()
         {
-
             var inventory = new Inventory();
             Container.BindInterfacesTo<Inventory>().FromInstance(inventory).AsSingle();
 
@@ -17,7 +16,6 @@ namespace rav3d
             
             BindIfExist<NetworkController>(gameObject);
             
-
         }
         
         public void BindIfExist<T>(GameObject target)

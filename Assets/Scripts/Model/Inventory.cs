@@ -1,14 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace rav3d.Model
 {
     public class Inventory: IInventory
     {
         public Dictionary<int, Item> items = new Dictionary<int, Item>();
-
-
+        
         public InventoryEvent InventoryChanged { get; } = new InventoryEvent();
 
         public void AddItem(Item itemData)

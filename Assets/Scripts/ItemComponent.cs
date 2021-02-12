@@ -1,4 +1,3 @@
-using System;
 using rav3d.Model;
 using UnityEngine;
 
@@ -7,8 +6,9 @@ namespace rav3d
     public class ItemComponent : MonoBehaviour
     {
         public Item ItemData;
-
         private Rigidbody _rigidbody = null;
+
+        public bool IsFree() => !_rigidbody.isKinematic;
 
         private void Start()
         {

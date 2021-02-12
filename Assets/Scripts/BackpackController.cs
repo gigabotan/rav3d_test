@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using rav3d.Model;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace rav3d
@@ -16,27 +14,33 @@ namespace rav3d
         private Dictionary<ItemType, ItemComponent> items = new Dictionary<ItemType, ItemComponent>();
 
 
-        private void Awake()
+        private void Start()
         {
-            inventory.InventoryChanged.AddListener(DropElement);
+            inventory.InventoryChanged.AddListener((Item item, bool actionType) =>
+            {
+                if (!actionType)
+                {
+                    DropElement(item.ItemType);
+                }
+            });
         }
 
 
         public void OnTriggerEnter(Collider other)
         {
             var itemComponent = other.GetComponent<ItemComponent>();
-            if (itemComponent)
+            if (itemComponent && itemComponent.IsFree())
             {
                 PickElement(itemComponent);
             }
         }
 
-        public void DropElement(Item item, bool actionType)
+        public void DropElement(ItemType slot)
         {
-            if (!actionType && items.ContainsKey(item.ItemType))
+            if (items.ContainsKey(slot))
             {
-                items[item.ItemType].Drop();
-                items.Remove(item.ItemType);
+                items[slot].Drop();
+                items.Remove(slot);
             }
         }
 

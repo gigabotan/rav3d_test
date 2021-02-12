@@ -21,21 +21,16 @@ namespace rav3d
                     
                     _mouseState = true;
                     screenSpace = Camera.main.WorldToScreenPoint (target.transform.position);
-                    Debug.Log(screenSpace);
                     offset = target.transform.position - Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
                 }
             }
             if (Input.GetMouseButtonUp (0)) {
                 _mouseState = false;
             }
-            if (_mouseState) {
-                //keep track of the mouse position
+            if (_mouseState && !target.GetComponent<Rigidbody>().isKinematic) 
+            {
                 var curScreenSpace = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, screenSpace.z);
-
-                //convert the screen mouse position to world point and adjust with offset
                 var curPosition = Camera.main.ScreenToWorldPoint (curScreenSpace) + offset;
-
-                //update the position of the object in the world
                 target.transform.position = curPosition;
             }
         }
@@ -49,7 +44,12 @@ namespace rav3d
                 target = hit.collider.gameObject;
             }
 
-            return target;
+            if (target && target.GetComponent<Draggable>())
+            {
+                return target;
+            }
+
+            return null;
         }
     }
 }
